@@ -7,6 +7,6 @@
 
 import {createContext} from 'react';
 
-const ThemeContext = createContext(null);
+const ThemeContext = createContext<null | string>(null);
 
 export default ThemeContext;

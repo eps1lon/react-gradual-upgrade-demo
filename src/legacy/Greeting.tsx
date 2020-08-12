@@ -21,7 +21,7 @@ store.subscribe(() => {
 
 interface AboutSectionProps {
   counter: number;
-  dispatch: typeof store["dispatch"];
+  dispatch: any;
 }
 
 class AboutSection extends Component<AboutSectionProps> {
@@ -62,4 +62,8 @@ function mapStateToProps(state: ReturnType<typeof store["getState"]>) {
   return { counter: state };
 }
 
-export default connect(mapStateToProps)(AboutSection);
+// Older `@types/react-redux` versions do not type the automatically injected `dispatch`
+// So we manually do to have better type coverage
+export default connect(mapStateToProps, (dispatch) => ({ dispatch }))(
+  AboutSection
+);

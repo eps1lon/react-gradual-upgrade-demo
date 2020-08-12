@@ -1,6 +1,8 @@
 # Demo of Gradual React Upgrades
 
-This is a demo of how you can configure a build system to serve **two different versions of React** side by side in the same app. This is not optimal, and should only be used as a compromise to prevent your app from getting stuck on an old version of React.
+**WARNING**: Type-checking works but as long as not typings for v17 are available it's unclear if it is actually working.
+
+This is a demo of how you can configure a build system to serve **two different versions of React** side by side in the same app with typechecking. This is not optimal, and should only be used as a compromise to prevent your app from getting stuck on an old version of React.
 
 **[Learn more about Gradual Upgrades.](https://reactjs.org/blog/2020/08/10/react-v17-rc.html#gradual-upgrades)**
 
@@ -49,6 +51,13 @@ If you want to test the production build, you can run instead:
 npm install
 npm run build
 npx serve -s build
+```
+
+If you want to typecheck the code, you can run instead:
+
+```
+npm install
+npm run typecheck
 ```
 
 This sample app uses client-side routing and consists of two routes:

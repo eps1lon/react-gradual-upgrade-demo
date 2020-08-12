@@ -5,11 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createStore} from 'redux';
+import { createStore } from "redux";
+import type { Action } from "redux";
 
-function reducer(state = 0, action) {
+function reducer(state: number = 0, action: Action<string>) {
   switch (action.type) {
-    case 'increment':
+    case "increment":
       return state + 1;
     default:
       return state;

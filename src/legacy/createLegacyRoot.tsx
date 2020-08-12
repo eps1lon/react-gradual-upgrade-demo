@@ -7,18 +7,29 @@
 
 /* eslint-disable react/jsx-pascal-case */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ThemeContext from './shared/ThemeContext';
+import React, { JSXElementConstructor } from "react";
+import ReactDOM from "react-dom";
+import ThemeContext from "./shared/ThemeContext";
 
 // Note: this is a semi-private API, but it's ok to use it
 // if we never inspect the values, and only pass them through.
-import {__RouterContext} from 'react-router';
-import {Provider} from 'react-redux';
+import { __RouterContext } from "react-router";
+import { Provider } from "react-redux";
+
+interface BridgeContext {
+  theme: string;
+  reactRedux: any;
+  router: any;
+}
+
+interface BridgeProps {
+  children?: React.ReactNode;
+  context: BridgeContext;
+}
 
 // Pass through every context required by this tree.
 // The context object is populated in src/modern/withLegacyRoot.
-function Bridge({children, context}) {
+function Bridge({ children, context }: BridgeProps) {
   return (
     <ThemeContext.Provider value={context.theme}>
       <__RouterContext.Provider value={context.router}>
@@ -33,9 +44,13 @@ function Bridge({children, context}) {
   );
 }
 
-export default function createLegacyRoot(container) {
+export default function createLegacyRoot(container: HTMLElement) {
   return {
-    render(Component, props, context) {
+    render<Props>(
+      Component: JSXElementConstructor<Props>,
+      props: Props,
+      context: BridgeContext
+    ) {
       ReactDOM.render(
         <Bridge context={context}>
           <Component {...props} />

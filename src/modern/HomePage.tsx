@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <>
       <h2>src/modern/HomePage.js</h2>
-      <h3 style={{ color: theme }}>
+      <h3 style={{ color: theme! }}>
         This component is rendered by the outer React ({React.version}).
       </h3>
       <Clock />

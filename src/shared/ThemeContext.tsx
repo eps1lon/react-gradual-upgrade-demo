@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createContext} from 'react';
+import { createContext } from "react";
+import type { CSSProperties } from "react";
 
-const ThemeContext = createContext<null | string>(null);
+const ThemeContext = createContext<null | CSSProperties["color"]>(null);
 
 export default ThemeContext;

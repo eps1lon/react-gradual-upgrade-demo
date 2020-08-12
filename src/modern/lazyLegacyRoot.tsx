@@ -18,12 +18,18 @@ interface Record<T> {
   result: null | T;
 }
 
+interface Record<T> {
+  status: "pending" | "rejected" | "fulfilled";
+  promise: null | Promise<void>;
+  result: null | T;
+}
+
 interface Root {
   render<Props>(
     Component: React.JSXElementConstructor<Props>,
     props: Props,
     context: {
-      theme: string;
+      theme: React.CSSProperties["color"] | null;
       router: any;
       reactRedux: any;
     }
@@ -55,8 +61,8 @@ export default function lazyLegacyRoot<Props>(
       import("../legacy/createLegacyRoot")
     ).default;
     const Component = readModule(componentModule, getLegacyComponent).default;
-    const containerRef = useRef(null);
-    const rootRef = useRef<Root>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const rootRef = useRef<Root | null>(null);
 
     // Populate every contexts we want the legacy subtree to see.
     // Then in src/legacy/createLegacyRoot we will apply them.
@@ -75,7 +81,7 @@ export default function lazyLegacyRoot<Props>(
     // Create/unmount.
     useLayoutEffect(() => {
       if (!rootRef.current) {
-        rootRef.current = createLegacyRoot(containerRef.current);
+        rootRef.current = createLegacyRoot(containerRef.current!);
       }
       const root = rootRef.current;
       return () => {
@@ -99,7 +105,7 @@ export default function lazyLegacyRoot<Props>(
 // we fetch the component and the legacy React to render it.
 function readModule<T>(record: Record<T>, createPromise: () => Promise<T>): T {
   if (record.status === "fulfilled") {
-    return record.result;
+    return record.result!;
   }
   if (record.status === "rejected") {
     throw record.result;
